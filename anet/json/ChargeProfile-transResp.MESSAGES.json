@@ -1,0 +1,22 @@
+{
+
+
+	"messages": [
+		{
+			"code": "1",
+			"description": "This transaction has been approved."
+		}
+	],
+
+    "messages": {
+        "message": [
+				{
+				"code": "E00003",
+				"text": "..."
+			}
+		],
+        "resultCode": "Error"
+    }
+
+
+}

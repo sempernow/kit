@@ -1,0 +1,12 @@
+{
+    "messages": {
+        "message": [{
+            "code": "E00040",
+            "text": "Customer Profile ID or Customer Payment Profile ID not found."
+        }],
+        "resultCode": "Error"
+    },
+    "transactionResponse": {
+        "SupplementalDataQualificationIndicator": 0
+    }
+}

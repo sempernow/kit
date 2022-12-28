@@ -1,0 +1,23 @@
+{
+  "act": 5,
+  "xid": "752cc2cc-fa1e-11eb-8d46-00155db74625",
+  "payer_id": "5fb7872a-89f5-4969-b1ec-d6d435dbb603",
+  "payee_id": "752cc2cc-fa1e-11eb-8d46-00155db74625",
+  "tokens_q": 0,
+  "tokens_p": 12,
+  "anet": {
+    "credit_card": {
+      "card_name": "mastercard",
+      "card_number": "",
+      "exp_date": "",
+      "card_code": ""
+    },
+    "zip_code": "10003",
+    "fingerprint": "dedb407b853f427224d9ee0018e04ce2670bca0b4e7148b3b054955f85c4511a",
+    "data_descriptor": "COMMON.ACCEPT.INAPP.PAYMENT",
+    "data_value": "eyJjb2RlIjoiNTBfMl8wNjAwMDUyREU0QjlDODM5OUUzNTFBMDA5MjVENzhGMjY5MzBDM0Y1RjAwQzgwRTY3ODhCMjcyMkZGNzM1RDIyNzlEODNEOUMxOTIzQTJGMDlFOUM4RDk3QjhEMzNDODFDREQ3QTZGIiwidG9rZW4iOiI5NjI5NTg3ODcyMDcxMTMzMzAzNjAxIiwidiI6IjEuMSJ9",
+    "profile_customer_id": "901324226",
+    "profile_payment_id": "901129537"
+  },
+  "csrf": "snun0z1gqnefvkf3rdfmto"
+}
