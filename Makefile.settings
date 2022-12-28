@@ -22,17 +22,14 @@ INFO    := @bash -c 'printf $(YELLOW);echo "@ $$1";printf $(RESTORE)' MESSAGE
 ##############################################################################
 # Project Meta
 
+export PRJ     := kit
 export HUB     := gd9h
 export ORG     := Sempernow LLC
-export PRJ     := kit
 export MODULE  := github.com/sempernow/${PRJ}
 export AUTHORS := dev <dev@sempernow.com>
 export VENDOR  := ${ORG}
 export SVN     := $(shell git rev-parse HEAD)
 export BUILT   := $(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
-#... @ "Labels":{"image.created": <BUILT>}
-# That dot-named key format is specified by the shitwits of "opencontainers".
-# Syntax to retrieve : docker image inspect $_IMAGE |jq -Mr '.[].Config.Labels | .["image.created"]'
 
 ### Golang build
 export OS   := $(shell go env GOHOSTOS)
@@ -42,7 +39,7 @@ export ARCH := $(shell go env GOHOSTARCH)
 export GOLANG_IMAGE   := golang:1.19.2-bullseye
 export APP_BASE_IMAGE := alpine:3.16.3
 
-export PATH_HOST_ROOT := /s/DEV/go/uqc
+export PATH_HOST_ROOT := /s/DEV/go/kit
 export PATH_CTNR_ROOT := /app
 
 ##############################################################################
