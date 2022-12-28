@@ -1,0 +1,52 @@
+##############################################################################
+# Makefile.settings : Environment Variables for Makefile(s)
+##############################################################################
+# Environment variable rules:
+# - Any TRAILING whitespace KILLS its variable value and may break recipes.
+# - ESCAPE only that required by the shell (bash).
+# - Environment Hierarchy:
+#   - Makefile environment OVERRIDEs OS environment.
+#   - Docker YAML `env_file:` OVERRIDEs OS/Makefile environment.
+#   - Docker YAML `environment:` OVERRIDEs YAML `env_file:`.
+#   - CMDline OVERRIDEs ALL per `make recipeX FOO=newValue BAR=newToo`.
+#
+
+##############################################################################
+# Makefile $(INFO) Meta 
+SHELL   := /bin/bash
+YELLOW  := "\e[1;33m"
+RESTORE := "\e[0m"
+INFO    := @bash -c 'printf $(YELLOW);echo "@ $$1";printf $(RESTORE)' MESSAGE
+#... Usage: `$(INFO) 'whatever'` prints "@ whatever", stylized.
+
+##############################################################################
+# Project Meta
+
+export HUB     := gd9h
+export ORG     := Sempernow LLC
+export PRJ     := kit
+export MODULE  := github.com/sempernow/${PRJ}
+export AUTHORS := dev <dev@sempernow.com>
+export VENDOR  := ${ORG}
+export SVN     := $(shell git rev-parse HEAD)
+export BUILT   := $(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
+#... @ "Labels":{"image.created": <BUILT>}
+# That dot-named key format is specified by the shitwits of "opencontainers".
+# Syntax to retrieve : docker image inspect $_IMAGE |jq -Mr '.[].Config.Labels | .["image.created"]'
+
+### Golang build
+export OS   := $(shell go env GOHOSTOS)
+export ARCH := $(shell go env GOHOSTARCH)
+
+### https://hub.docker.com/_/golang | https://hub.docker.com/_/alpine
+export GOLANG_IMAGE   := golang:1.19.2-bullseye
+export APP_BASE_IMAGE := alpine:3.16.3
+
+export PATH_HOST_ROOT := /s/DEV/go/uqc
+export PATH_CTNR_ROOT := /app
+
+##############################################################################
+# Operational Params : Reset per launch of docker swarm|stack|service up|down
+
+export VER_APP ?= 0.5.0
+
