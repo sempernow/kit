@@ -1,6 +1,6 @@
 # [`kit`](https://github.com/sempernow/kit "sempernow/kit @ GitHub")
 
-Kit is a library of common packages for building Golang applications.
+A library of common packages for building Golang applications.
 
 
 ### &nbsp;
