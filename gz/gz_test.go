@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"gd9/prj3/kit/gz"
-	"gd9/prj3/kit/testkit"
+	"github.com/sempernow/kit/gz"
+	"github.com/sempernow/kit/testkit"
 )
 
 func TestGzipper(t *testing.T) {

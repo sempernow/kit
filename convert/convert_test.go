@@ -1,9 +1,10 @@
 package convert_test
 
 import (
-	"gd9/prj3/kit/convert"
 	"strconv"
 	"testing"
+
+	"github.com/sempernow/kit/convert"
 )
 
 // ******************************************************

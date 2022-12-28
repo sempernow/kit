@@ -16,8 +16,8 @@ import (
 	"strings"
 	"time"
 
-	"gd9/prj3/kit/convert"
-	"gd9/prj3/kit/timestamp"
+	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/timestamp"
 
 	"github.com/pkg/errors"
 

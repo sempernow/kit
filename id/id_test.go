@@ -10,8 +10,8 @@ import (
 	"os"
 	"testing"
 
-	"gd9/prj3/kit/id"
-	"gd9/prj3/kit/str"
+	"github.com/sempernow/kit/id"
+	"github.com/sempernow/kit/str"
 
 	"github.com/gofrs/uuid" // FORKED from github.com/satori
 	"lukechampine.com/blake3"

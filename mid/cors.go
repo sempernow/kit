@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"gd9/prj3/kit/str"
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/str"
+	"github.com/sempernow/kit/web"
 
 	"go.opentelemetry.io/otel/trace"
 )
@@ -23,7 +23,7 @@ import (
 // CORS handles Cross-Origin Resource Sharing requests;
 // allowed origins and methods are settable per endpoint,
 // and closed over per declaration.
-// 	- methods GET, HEAD, and OPTIONS are allowed regardless.
+//   - methods GET, HEAD, and OPTIONS are allowed regardless.
 func CORS(origins, methods []string) web.Middleware {
 
 	if len(origins) == 0 {

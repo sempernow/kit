@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"gd9/prj3/kit/convert"
-	"gd9/prj3/kit/timestamp"
+	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/timestamp"
 )
 
 func TestTimeUtils(t *testing.T) {

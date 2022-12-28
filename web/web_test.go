@@ -1,18 +1,18 @@
 package web_test
 
 import (
-	"io/ioutil"
 	"net"
+	"os"
 	"strings"
 	"testing"
 
-	"gd9/prj3/kit/testkit"
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/testkit"
+	"github.com/sempernow/kit/web"
 )
 
 func TestSRI(t *testing.T) {
 	t.Log("@ CSP/SRI ...")
-	bb, err := ioutil.ReadFile("testSRI.txt")
+	bb, err := os.ReadFile("testSRI.txt")
 	testkit.Log(t, "Read resource file", err)
 	got := web.SRI(bb)
 	exp := "sha384-AZcucad51j6X9oVsNdkqjE23BWuEY1t5PdGmVP6EYYEz3ukrI8xIzdtYkc9lLnot"

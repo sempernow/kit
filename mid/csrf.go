@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"time"
 
-	"gd9/prj3/kit/auth"
-	"gd9/prj3/kit/convert"
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/auth"
+	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/web"
 
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/trace"
@@ -32,7 +32,8 @@ const (
 // Multiple modes may be invoked per handler; modes are mutually orthogonal.
 // See mitigate(..) for per-mode details.
 // https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
-// 	USAGE: mid.CSRF(mid.DomainLockedDouble, "__Host-c", []string{"http://foo.com", "https://api.bar.xyz"}...)
+//
+//	USAGE: mid.CSRF(mid.DomainLockedDouble, "__Host-c", []string{"http://foo.com", "https://api.bar.xyz"}...)
 func CSRF(mode int, cookieKey string, origins ...string) web.Middleware {
 
 	m := func(after web.Handler) web.Handler {

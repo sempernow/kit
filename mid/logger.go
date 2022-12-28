@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/web"
 
 	"go.opentelemetry.io/otel/trace"
 )
@@ -18,7 +18,8 @@ import (
 
 // Logger writes some request info to logs if request path
 // does not contain any blacklisted string of []excludedPaths list.
-// 	Format: TraceID : (200) GET /foo/bar -> IP:Port (Latency)
+//
+//	Format: TraceID : (200) GET /foo/bar -> IP:Port (Latency)
 func Logger(log *log.Logger, excludePaths ...string) web.Middleware {
 	m := func(before web.Handler) web.Handler {
 		h := func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {

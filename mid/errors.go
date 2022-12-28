@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/web"
 
 	"github.com/pkg/errors"
 

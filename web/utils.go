@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"html"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"os"
@@ -15,8 +15,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"gd9/prj3/kit/convert"
-	"gd9/prj3/kit/id"
+	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/id"
 )
 
 // Healthcheck to satisfy Docker healthcheck of any service endpoint
@@ -29,7 +29,7 @@ func Healthcheck(url string) error {
 		return err
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		//fmt.Println("FAIL @ body:", err)
 		return err
@@ -185,7 +185,7 @@ func ValidateJS(file string) error {
 	cmd := "node"
 	//target := "cfg.js"
 	//file, _ := filepath.Abs(filepath.Join(h.meta.PathWebRoot, "sa", "scripts", target))
-	_, err := ioutil.ReadFile(file)
+	_, err := os.ReadFile(file)
 	if err != nil {
 		panic(errors.Wrap(err, "unreadable file @ "+file))
 	}

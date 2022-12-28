@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/web"
 
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/trace"

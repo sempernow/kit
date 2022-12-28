@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package global // import "go.opentelemetry.io/otel/internal/global"
+package global
 
 /*
 This file contains the forwarding implementation of the TracerProvider used as
@@ -34,10 +34,8 @@ SDK prior to any Tracer creation.
 import (
 	"context"
 	"sync"
-	"sync/atomic"
 
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/internal/trace/noop"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -46,8 +44,9 @@ import (
 // All TracerProvider functionality is forwarded to a delegate once
 // configured.
 type tracerProvider struct {
-	mtx      sync.Mutex
-	tracers  map[il]*tracer
+	mtx     sync.Mutex
+	tracers []*tracer
+
 	delegate trace.TracerProvider
 }
 
@@ -61,17 +60,17 @@ var _ trace.TracerProvider = &tracerProvider{}
 // All Tracers provided prior to this function call are switched out to be
 // Tracers provided by provider.
 //
-// It is guaranteed by the caller that this happens only once.
+// Delegation only happens on the first call to this method. All subsequent
+// calls result in no delegation changes.
 func (p *tracerProvider) setDelegate(provider trace.TracerProvider) {
+	if p.delegate != nil {
+		return
+	}
+
 	p.mtx.Lock()
 	defer p.mtx.Unlock()
 
 	p.delegate = provider
-
-	if len(p.tracers) == 0 {
-		return
-	}
-
 	for _, t := range p.tracers {
 		t.setDelegate(provider)
 	}
@@ -88,30 +87,9 @@ func (p *tracerProvider) Tracer(name string, opts ...trace.TracerOption) trace.T
 		return p.delegate.Tracer(name, opts...)
 	}
 
-	// At this moment it is guaranteed that no sdk is installed, save the tracer in the tracers map.
-
-	c := trace.NewTracerConfig(opts...)
-	key := il{
-		name:    name,
-		version: c.InstrumentationVersion(),
-	}
-
-	if p.tracers == nil {
-		p.tracers = make(map[il]*tracer)
-	}
-
-	if val, ok := p.tracers[key]; ok {
-		return val
-	}
-
-	t := &tracer{name: name, opts: opts, provider: p}
-	p.tracers[key] = t
+	t := &tracer{name: name, opts: opts}
+	p.tracers = append(p.tracers, t)
 	return t
-}
-
-type il struct {
-	name    string
-	version string
 }
 
 // tracer is a placeholder for a trace.Tracer.
@@ -119,11 +97,11 @@ type il struct {
 // All Tracer functionality is forwarded to a delegate once configured.
 // Otherwise, all functionality is forwarded to a NoopTracer.
 type tracer struct {
-	name     string
-	opts     []trace.TracerOption
-	provider *tracerProvider
+	once sync.Once
+	name string
+	opts []trace.TracerOption
 
-	delegate atomic.Value
+	delegate trace.Tracer
 }
 
 // Compile-time guarantee that tracer implements the trace.Tracer interface.
@@ -134,59 +112,17 @@ var _ trace.Tracer = &tracer{}
 //
 // All subsequent calls to the Tracer methods will be passed to the delegate.
 //
-// It is guaranteed by the caller that this happens only once.
+// Delegation only happens on the first call to this method. All subsequent
+// calls result in no delegation changes.
 func (t *tracer) setDelegate(provider trace.TracerProvider) {
-	t.delegate.Store(provider.Tracer(t.name, t.opts...))
+	t.once.Do(func() { t.delegate = provider.Tracer(t.name, t.opts...) })
 }
 
 // Start implements trace.Tracer by forwarding the call to t.delegate if
 // set, otherwise it forwards the call to a NoopTracer.
-func (t *tracer) Start(ctx context.Context, name string, opts ...trace.SpanStartOption) (context.Context, trace.Span) {
-	delegate := t.delegate.Load()
-	if delegate != nil {
-		return delegate.(trace.Tracer).Start(ctx, name, opts...)
+func (t *tracer) Start(ctx context.Context, name string, opts ...trace.SpanOption) (context.Context, trace.Span) {
+	if t.delegate != nil {
+		return t.delegate.Start(ctx, name, opts...)
 	}
-
-	s := nonRecordingSpan{sc: trace.SpanContextFromContext(ctx), tracer: t}
-	ctx = trace.ContextWithSpan(ctx, s)
-	return ctx, s
+	return noop.Tracer.Start(ctx, name, opts...)
 }
-
-// nonRecordingSpan is a minimal implementation of a Span that wraps a
-// SpanContext. It performs no operations other than to return the wrapped
-// SpanContext.
-type nonRecordingSpan struct {
-	sc     trace.SpanContext
-	tracer *tracer
-}
-
-var _ trace.Span = nonRecordingSpan{}
-
-// SpanContext returns the wrapped SpanContext.
-func (s nonRecordingSpan) SpanContext() trace.SpanContext { return s.sc }
-
-// IsRecording always returns false.
-func (nonRecordingSpan) IsRecording() bool { return false }
-
-// SetStatus does nothing.
-func (nonRecordingSpan) SetStatus(codes.Code, string) {}
-
-// SetError does nothing.
-func (nonRecordingSpan) SetError(bool) {}
-
-// SetAttributes does nothing.
-func (nonRecordingSpan) SetAttributes(...attribute.KeyValue) {}
-
-// End does nothing.
-func (nonRecordingSpan) End(...trace.SpanEndOption) {}
-
-// RecordError does nothing.
-func (nonRecordingSpan) RecordError(error, ...trace.EventOption) {}
-
-// AddEvent does nothing.
-func (nonRecordingSpan) AddEvent(string, ...trace.EventOption) {}
-
-// SetName does nothing.
-func (nonRecordingSpan) SetName(string) {}
-
-func (s nonRecordingSpan) TracerProvider() trace.TracerProvider { return s.tracer.provider }

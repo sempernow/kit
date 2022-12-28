@@ -6,14 +6,21 @@ include Makefile.settings
 
 menu :
 	$(INFO) 'Manage source code :'
-	@echo '	push  : git push -u origin master'
-	@echo '	tag   : git tag v${VER_APP}  (VER_APP)'
-	@echo '	untag : git … : remove v${VER_APP}  (VER_APP)'
+	@echo '	tidy    : go mod tidy;go mod vendor'
+	@echo '	pkglist : go list …'
+	@echo '	push    : git push -u origin master'
+	@echo '	tag     : git tag v${VER_APP}  (VER_APP)'
+	@echo '	untag   : git … : remove v${VER_APP}  (VER_APP)'
 
 ##############################################################################
 # Source 
+pkglist : 
+	@go list -f '{{ .Name | printf "%14s" }}  {{ .Doc }}' ./...
+tidy :
+	go mod tidy
+	go mod vendor
 
-# git remote add origin git@github.com:$_USERNAME/$_REPONAME.git  # ssh mode
+## git remote add origin git@github.com:$_USERNAME/$_REPONAME.git  ## ssh mode
 push :
 	gc
 	git push -u origin master

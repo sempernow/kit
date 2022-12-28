@@ -4,16 +4,14 @@ import (
 	"crypto/rsa"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 	"testing"
 	"time"
 
-	"gd9/prj3/app"
-	"gd9/prj3/kit/auth"
-	"gd9/prj3/kit/convert"
-	"gd9/prj3/kit/testkit"
+	"github.com/sempernow/kit/auth"
+	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/testkit"
 
 	"github.com/golang-jwt/jwt"
 )
@@ -29,7 +27,7 @@ func TestAuthenticator(t *testing.T) {
 		err        error
 	)
 
-	bb, err = ioutil.ReadFile(os.Getenv("APP_AUTH_PRIVATE_KEY_FILE"))
+	bb, err = os.ReadFile(os.Getenv("APP_AUTH_PRIVATE_KEY_FILE"))
 	if err != nil {
 		fmt.Println("... is STRING")
 		bb = []byte(os.Getenv("APP_AUTH_PRIVATE_KEY_FILE"))
@@ -66,7 +64,7 @@ func TestAuthenticator(t *testing.T) {
 				StandardClaims: jwt.StandardClaims{
 					Issuer:    auth.Issuer(auth.PWA),
 					Subject:   "0x01",
-					Audience:  app.Audience,
+					Audience:  "app.Audience",
 					ExpiresAt: time.Now().Add(8760 * time.Hour).Unix(), // One year.
 					IssuedAt:  auth.IssuedAtNow(),
 				},
@@ -99,7 +97,7 @@ func TestAuthenticator(t *testing.T) {
 			StandardClaims: jwt.StandardClaims{
 				Issuer:    auth.Issuer(auth.PWA),
 				Subject:   "0x01",
-				Audience:  app.Audience,
+				Audience:  "app.Audience",
 				ExpiresAt: time.Now().Add(-1 * time.Minute).Unix(), // @ Expired
 				IssuedAt:  auth.IssuedAtNow(),
 			},

@@ -2,8 +2,9 @@ package str_test
 
 import (
 	"fmt"
-	"gd9/prj3/kit/str"
 	"testing"
+
+	"github.com/sempernow/kit/str"
 )
 
 func BenchmarkRandAlphaNum(b *testing.B) {

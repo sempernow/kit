@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/web"
 
 	"github.com/gofrs/uuid" // FORKED from github.com/satori
 	"github.com/google/go-cmp/cmp"

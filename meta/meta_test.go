@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"gd9/prj3/kit/convert"
+	"github.com/sempernow/kit/convert"
 	// FORKED from github.com/satori
 )
 

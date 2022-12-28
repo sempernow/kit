@@ -3,7 +3,7 @@ package lorem_test
 import (
 	"testing"
 
-	"gd9/prj3/kit/lorem"
+	"github.com/sempernow/kit/lorem"
 	// lorem "github.com/drhodes/golorem"
 )
 

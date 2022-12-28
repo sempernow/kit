@@ -2,7 +2,7 @@
 package main
 
 import (
-	anet "gd9/prj3/kit/anet/badu"
+	anet "github.com/sempernow/kit/anet/badu"
 )
 
 //import anet "authorize_net"

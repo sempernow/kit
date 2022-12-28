@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"gd9/prj3/kit/auth"
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/auth"
+	"github.com/sempernow/kit/web"
 
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/trace"

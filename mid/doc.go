@@ -5,7 +5,7 @@ import (
 	"context"
 	"net/http"
 
-	"gd9/prj3/kit/web"
+	"github.com/sempernow/kit/web"
 
 	"go.opentelemetry.io/otel/trace"
 )
@@ -16,8 +16,9 @@ import (
 // This transforms the otherwise nested syntax of middlewares into a CSV list,
 // with execution abiding list order; all executing prior to the base handler.
 // Such middleware may be appended per application service, or per route:
-// 	svc := web.NewApp(shutdown, mid.M1(bar), mid.M2(foo, whatever), ...)
-// 	svc.Handle(method, path, x.hndlrY, mid.M9(423), mid.M5(true), ...)
+//
+//	svc := web.NewApp(shutdown, mid.M1(bar), mid.M2(foo, whatever), ...)
+//	svc.Handle(method, path, x.hndlrY, mid.M9(423), mid.M5(true), ...)
 func ExampleMiddleware(foo int, bar string, whatever ...interface{}) web.Middleware {
 
 	//... Close over foo, bar, and whatever here ...
