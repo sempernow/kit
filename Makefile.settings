@@ -45,5 +45,5 @@ export PATH_CTNR_ROOT := /app
 ##############################################################################
 # Operational Params : Reset per launch of docker swarm|stack|service up|down
 
-export VER_APP ?= 0.5.0
+export VER_APP ?= 0.5.1
 
