@@ -13,8 +13,7 @@ A library of common packages for building Golang applications.
 
 # Link @ (HTML | MD)
 
-([HTML](file:///d:/1%20Data/IT/___.html "@ browser") | [MD](file:///d:/1%20Data/IT/___.md "___"))   
-
+([HTML](file:///d:/___.html "@ browser") | [MD](file:///d:/___.md "___"))   
 
 # Bookmark
 
