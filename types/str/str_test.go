@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/sempernow/kit/str"
+	"github.com/sempernow/kit/types/str"
 )
 
 func BenchmarkRandAlphaNum(b *testing.B) {

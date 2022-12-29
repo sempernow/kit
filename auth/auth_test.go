@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/sempernow/kit/auth"
-	"github.com/sempernow/kit/convert"
 	"github.com/sempernow/kit/testkit"
+	"github.com/sempernow/kit/types/convert"
 
 	"github.com/golang-jwt/jwt"
 )

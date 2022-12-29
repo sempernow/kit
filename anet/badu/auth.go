@@ -1,4 +1,4 @@
-package authorize_net
+package badu
 
 type AuthenticateTestRequest struct {
 	ANetApiRequest `json:"authenticateTestRequest"`

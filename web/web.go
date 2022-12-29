@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/types/convert"
 
 	"github.com/dimfeld/httptreemux/v5"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"

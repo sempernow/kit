@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/types/convert"
 )
 
 // ******************************************************

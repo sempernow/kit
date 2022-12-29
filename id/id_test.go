@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/sempernow/kit/id"
-	"github.com/sempernow/kit/str"
+	"github.com/sempernow/kit/types/str"
 
 	"github.com/gofrs/uuid" // FORKED from github.com/satori
 	"lukechampine.com/blake3"

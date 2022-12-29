@@ -1,4 +1,4 @@
-package authorize_net
+package badu
 
 import (
 	"bytes"
@@ -52,12 +52,12 @@ type Client struct {
 	log Logger
 }
 
-// func Endpoint() string {
-// 	if testMode {
-// 		return EndpointSandbox
-// 	}
-// 	return EndpointLive
-// }
+//	func Endpoint() string {
+//		if testMode {
+//			return EndpointSandbox
+//		}
+//		return EndpointLive
+//	}
 func NewAPIClient(cfg *HttpClientCfg, logger Logger) *Client {
 	if cfg == nil {
 		cfg = &HttpClientCfg{}

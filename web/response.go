@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/types/convert"
 
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/trace"

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/types/convert"
 	// FORKED from github.com/satori
 )
 

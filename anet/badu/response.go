@@ -1,4 +1,4 @@
-package authorize_net
+package badu
 
 type Error struct {
 	ErrorCode ErrCodeEnum `json:"errorCode,omitempty"`

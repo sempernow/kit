@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/sempernow/kit/auth"
-	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/types/convert"
 	"github.com/sempernow/kit/web"
 
 	"github.com/pkg/errors"

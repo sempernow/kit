@@ -1,4 +1,4 @@
-package authorize_net
+package badu
 
 // -- request --
 type CustomerAddress struct {

@@ -1,5 +1,5 @@
-// Package badu/authorize.net extracts.
-package authorize_net
+// Package badu provides extracts of github.com/badu/authorize.net.
+package badu
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/sempernow/kit/convert"
+	"github.com/sempernow/kit/types/convert"
 )
 
 var (

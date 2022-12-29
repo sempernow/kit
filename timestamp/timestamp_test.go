@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sempernow/kit/convert"
 	"github.com/sempernow/kit/timestamp"
+	"github.com/sempernow/kit/types/convert"
 )
 
 func TestTimeUtils(t *testing.T) {

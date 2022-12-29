@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sempernow/kit/str"
+	"github.com/sempernow/kit/types/str"
 	"github.com/sempernow/kit/web"
 
 	"go.opentelemetry.io/otel/trace"
