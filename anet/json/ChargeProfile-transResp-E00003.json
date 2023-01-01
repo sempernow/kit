@@ -1,9 +1,0 @@
-{
-    "messages": {
-        "message": [{
-            "code": "E00003",
-            "text": "The 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:customerProfileId' element is invalid - The value \u0026#39;XXXBOGUS\u0026#39; is invalid according to its datatype 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:numericString' - The Pattern constraint failed."
-        }],
-        "resultCode": "Error"
-    }
-}

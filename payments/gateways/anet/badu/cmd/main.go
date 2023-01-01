@@ -2,7 +2,7 @@
 package main
 
 import (
-	anet "github.com/sempernow/kit/anet/badu"
+	anet "github.com/sempernow/kit/payments/gateways/anet/badu"
 )
 
 //import anet "authorize_net"
