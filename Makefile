@@ -8,6 +8,7 @@ menu :
 	$(INFO) 'Manage source code :'
 	@echo '	tidy    : go mod tidy;go mod vendor'
 	@echo '	pkglist : go list …'
+	@echo '	test    : go test -v -count=1 ./...'
 	@echo '	push    : git push -u origin master'
 	@echo '	tag     : git tag v${VER_APP}  (VER_APP)'
 	@echo '	untag   : git … : remove v${VER_APP}  (VER_APP)'
@@ -19,6 +20,8 @@ pkglist :
 tidy :
 	go mod tidy
 	go mod vendor
+test :
+	go test -v -count=1 ./...
 
 ## git remote add origin git@github.com:$_USERNAME/$_REPONAME.git  ## ssh mode
 push :
