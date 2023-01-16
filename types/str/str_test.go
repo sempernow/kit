@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/sempernow/kit/testkit"
 	"github.com/sempernow/kit/types/str"
 )
 
