@@ -79,6 +79,25 @@ func StripDuplSpace(data string) string {
 	return ws.ReplaceAllString(data, " ")
 }
 
+// IsAlphaNum ...
+func IsAlphaNum(s string) bool {
+	safe := func(r rune) rune {
+		switch {
+		case r > unicode.MaxASCII:
+			return -1
+		case unicode.IsLetter(r):
+			return r
+		case unicode.IsNumber(r):
+			return r
+		default:
+			return -1
+		}
+	}
+	len0 := len(s)
+	s = strings.Map(safe, s)
+	return len(s) == len0
+}
+
 // CleanAlphaNum filters out all characters
 // but for alphanum words, each separated by single whitespace.
 // Optionally limit return to max characters.
