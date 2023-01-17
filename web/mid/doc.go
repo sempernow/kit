@@ -1,4 +1,5 @@
-// Package mid provides all app-layer middleware functions.
+// Package mid provides middlewares for package web.
+
 package mid
 
 import (

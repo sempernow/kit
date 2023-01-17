@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"net/url"
@@ -78,12 +78,12 @@ func SetAPI(name string, key string, mode string) API {
 	return api
 }
 
-// func Endpoint() string {
-// 	if testMode {
-// 		return EndpointSandbox
-// 	}
-// 	return EndpointLive
-// }
+//	func Endpoint() string {
+//		if testMode {
+//			return EndpointSandbox
+//		}
+//		return EndpointLive
+//	}
 func NewAPIClient(cfg *HttpClientCfg, logger Logger) *Client {
 	if cfg == nil {
 		cfg = &HttpClientCfg{}
@@ -198,7 +198,7 @@ func (c Client) Do(req *http.Request, result interface{}, printRaw bool) error {
 	}
 	defer response.Body.Close()
 
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return errors.Wrap(err, "client do : reading resp body")
 	}

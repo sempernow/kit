@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -149,7 +148,7 @@ func mitigate(r *http.Request, mode int, key string, origins ...string) error {
 		// while preserving it for downstream handler.
 		var buf bytes.Buffer
 		body := io.TeeReader(r.Body, &buf)
-		r.Body = ioutil.NopCloser(&buf)
+		r.Body = io.NopCloser(&buf)
 
 		// Extract CSRF token from request body.
 		type csrf = struct {

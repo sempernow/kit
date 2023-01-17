@@ -117,14 +117,14 @@ func GzipDecompressFromBytes(gzb []byte) ([]byte, error) {
 
 	// // buf := new(bytes.Buffer)
 	// // _, err := buf.ReadFrom(gz)
-	// return ioutil.ReadAll(gz)
+	// return io.ReadAll(gz)
 }
 
 // ToBytes FAILs ... nil pointer
 // Must do all at once (compress and to bytes)
 func ToBytes(gzr io.Reader) ([]byte, error) {
 	// Fail 1
-	//return ioutil.ReadAll(gzr)
+	//return io.ReadAll(gzr)
 
 	// Fail 2
 	// buf := new(bytes.Buffer)

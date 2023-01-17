@@ -72,6 +72,8 @@ const (
 	PWA = "fc160f10-5683-4cdf-b0b4-8ddee3a631bc"
 	// Access Mode : API user (access token per api key)
 	API = "5066494a-22ef-47ee-903b-43782244c08c"
+	// Access Mode : AOA (claim existing user account per api key)
+	AOA = "deb726dd-06a8-466c-b8b0-72082051c210"
 )
 
 const (
@@ -123,6 +125,7 @@ const (
 // Token TTLs utilized at data layer and app-wide testing.
 // Services (app layer) declare these params per config on init;
 // they are resettable (per environment vars) sans rebuild.
+//
 //	@Seconds: AccessTTL.Seconds(), @Epoch: time.Now().Add(AccessTTL).Unix()
 const (
 	RefreshTTL = 180 * 24 * time.Hour
@@ -170,24 +173,6 @@ type TokenPair struct {
 	Provider string `json:"provider,omitempty"`
 }
 
-// AccessMode defines the issuer/claimant mode of authorization;
-// the authentication endpoint/method by which the token was granted.
-// Use to set Standard Claims : Issuer (iss) value.
-// The two modes are: PWA (this web app) or API (a 3rd-party app).
-// 	PWA mode uses tokens and cookies (access and refresh; pair of pairs).
-// 	API mode uses access token only, acquired and refreshed per api key.
-// The mode is set (once) per user authentication.
-// DEPRICATED : UNUSED : Simply used the constants directly.
-func AccessMode(a string) string {
-	switch a {
-	case PWA:
-		return PWA // ccab617f-685b-5731-9945-d66d231b022a
-	case API:
-		return API // e587b929-a74e-5320-93b0-60e71c564415
-	}
-	return uuid.NewV5(uuid.NamespaceOID, a).String()
-}
-
 // ctxKey represents the type of value for the context key.
 type ctxKey int
 
@@ -209,7 +194,8 @@ type Claims struct {
 }
 
 // Issuer identifies authentication endpoint (e.g., URI) whereof token is issued;
-// 	Standard Claims : Issuer (iss) value.
+//
+//	Standard Claims : Issuer (iss) value.
 func Issuer(principal string) string {
 	return uuid.NewV5(uuid.NamespaceURL, principal).String()
 }
@@ -219,7 +205,8 @@ func Issuer(principal string) string {
 // if issuer and test run on different nodes.
 // This occurred at private node that failed to synch with network time
 // due to Ubuntu's newer time-synch utility; npt v. timedatectl.
-// 	Standard Claims : IssuedAt (iat) value.
+//
+//	Standard Claims : IssuedAt (iat) value.
 func IssuedAt(now *time.Time) int64 {
 	t := now.Add((-IssuedAtOffset) * time.Second)
 	return t.Unix()
@@ -284,10 +271,10 @@ type Auth struct {
 // New creates an authenticator (`*Auth`) used to generate a token (JWT)
 // for a set of user claims and recreate the claims by parsing the token.
 // It will error if:
-// 	- The private key is nil
-// 	- The public key func is nil.
-// 	- The key ID is blank.
-// 	- The specified algorithm is unsupported.
+//   - The private key is nil
+//   - The public key func is nil.
+//   - The key ID is blank.
+//   - The specified algorithm is unsupported.
 func New(privateKey *rsa.PrivateKey, activeKID, algorithm string, lookup PubKeyLookup) (*Auth, error) {
 	if privateKey == nil {
 		return nil, errors.New("private key cannot be nil")
