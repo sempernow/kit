@@ -64,7 +64,7 @@ func Base32(alphabet ...string) string {
 func UUIDv5(space, name string) (string, error) {
 
 	if name == "" {
-		return "", errors.New("missing NAME")
+		return "", errors.New("missing name")
 	}
 	var ns = uuid.UUID{}
 
@@ -82,7 +82,7 @@ func UUIDv5(space, name string) (string, error) {
 		ns, err = uuid.FromString(space)
 		if err != nil {
 			return "", errors.New(
-				"invalid NAMESPACE ['dns', 'oid', 'url', 'x500', (any UUID)]",
+				"invalid namespace ['dns', 'oid', 'url', 'x500', (any UUID)]",
 			)
 		}
 	}
@@ -230,12 +230,12 @@ func Nonce(size int) ([]byte, error) {
 	bb := make([]byte, size)
 	_, err := io.ReadFull(crnd.Reader, bb)
 	if err != nil {
-		return []byte{}, errors.Wrap(err, "Nonce : source of randomness unavailable")
+		return []byte{}, errors.Wrap(err, "nonce : source of randomness unavailable")
 	}
 	return bb, nil
 }
 
-// XOR ...
+// XOR performs XOR (encrypt/decrypt) on input against a key (nonce) cyclically.
 func XOR(input, key string) (output string) {
 	var str strings.Builder
 
@@ -243,6 +243,23 @@ func XOR(input, key string) (output string) {
 		str.WriteString(string(input[i] ^ key[i%len(key)]))
 	}
 	return str.String()
+}
+
+// XORstrings performs XOR (encrypt/decrypt) on input against a nonce cyclically.
+func XORstrings(input, nonce string) (output string) {
+	return XOR(input, nonce)
+}
+
+// XORbytes performs XOR (encrypt/decrypt) of two equal-sized byte slices.
+func XORbytes(a, b []byte) ([]byte, error) {
+	if len(a) != len(b) {
+		return nil, fmt.Errorf("slice lengths differ : [%d]a vs. [%d]b", len(a), len(b))
+	}
+	buf := make([]byte, len(a))
+	for i := range a {
+		buf[i] = a[i] ^ b[i]
+	}
+	return buf, nil
 }
 
 // EncodeSecret per XOR with nonce bisected for use as both key and padding.
@@ -269,26 +286,4 @@ func DecodeSecret(secret, nonce string) (string, error) {
 	}
 	//return strings.Split(BytesToString(bb), "|")[0], nil
 	return convert.BytesToString(bb), nil
-}
-
-// XORbytes performs XOR (encrypt/decrypt) of two equal-sized byte slices.
-// https://sourcegraph.com/github.com/hashicorp/vault/-/blob/helper/xor/xor.go#L8
-func XORbytes(a, b []byte) ([]byte, error) {
-	if len(a) != len(b) {
-		return nil, fmt.Errorf("Slice LENGTHs differ : [%d]a vs. [%d]b", len(a), len(b))
-	}
-	buf := make([]byte, len(a))
-	for i := range a {
-		buf[i] = a[i] ^ b[i]
-	}
-	return buf, nil
-}
-
-// XORstrings performs XOR (encrypt/decrypt) on input against a nonce.
-// https://kylewbanks.com/blog/xor-encryption-using-go
-func XORstrings(input, nonce string) (output string) {
-	for i := 0; i < len(input); i++ {
-		output += string(input[i] ^ nonce[i%len(nonce)])
-	}
-	return output
 }
